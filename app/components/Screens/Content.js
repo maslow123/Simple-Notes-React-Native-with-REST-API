@@ -1,0 +1,226 @@
+import React,{ Component } from 'react';
+import { 
+  View, StyleSheet, Text, FlatList, TouchableOpacity,
+  ActivityIndicator, Alert, RefreshControl } from 'react-native';
+
+import moment from 'moment';
+
+import { getNotes, searchNotes,
+         delNotes, getLoadData } from '../../Publics/Redux/Actions/notes';
+/* REDUx COMPONENT CALLING */
+import { getCategories } from '../../Publics/Redux/Actions/categories';
+import { connect } from 'react-redux';
+
+
+class Content extends Component {
+    constructor() {
+      super();
+      this.state = {
+        search : '',
+        desc_id : '',
+        refreshing: false,
+        page:1,
+        isLoading:false
+      }
+    }
+
+    componentDidMount = () => {
+      this.setState({isLoading:true},this.getData()),
+      this.getDataCategories()
+    }
+    
+    getSearchData = (keyword) => {
+      this.props.dispatch(searchNotes(keyword));
+    }
+    /* GET DATA NOTES */
+    getData = () => {
+      this.props.dispatch(getNotes())
+    }
+    /* INFINITY SCROLL */
+    handleLoadMore = async () => {
+      if(this.state.page < this.props.notes.page) {
+        this.setState(
+          {page : this.state.page + 1, isLoading:true},
+            ()=>this.props.dispatch(getLoadData(this.state.page))) 
+      }else{
+        this.setState({isLoading:false})
+      }
+    }
+    /* Make a reloader for infinity scroll */
+    renderFooter = ()=>{
+      return(
+            this.state.isLoading ? 
+            
+            <View style={styles.loader}>
+              <ActivityIndicator size="large"/>
+            </View> : null
+      )
+    }
+    /* GET DATA CATEGORIES */
+    getDataCategories = () => {
+      this.props.dispatch(getCategories())
+    }
+    /* DEL DATA CATEGORIES */
+    delDataNotes = (id) => {
+      this.props.dispatch(delNotes(id))
+    }
+    /* FITUR PULL REFRESH */
+    _onRefresh = async () => {
+      await this.setState({refreshing: true})
+      // await this.getData()
+      await this.getData()
+      await this.setState({refreshing: false})
+    }
+    
+    render() {
+      const { refreshing } = this.state;
+      
+      return ( 
+          <View style={{ margin:15, flex:1 }}>
+            
+            {
+              this.props.notes.isLoading ? <ActivityIndicator size="large" color="#007aff"/> : 
+              (
+                
+                <FlatList
+                  data={ this.props.notes.data }
+                  onEndReachedThreshold={0.1} // Scrolling
+                  onEndReached={this.handleLoadMore}
+                  ListFooterComponent={this.renderFooter}
+                  numColumns={ 2 }
+                  refreshControl = {
+                    <RefreshControl refreshing={refreshing} onRefresh={this._onRefresh}/>
+                  }
+                  renderItem={({ item, index }) => (
+                    <TouchableOpacity 
+                      onPress={()=>this.props.navigation.navigate('Edit',item)}
+                      onLongPress={
+                        ()=>{
+                        Alert.alert(
+                          'Warning !',
+                          'Are you sure delete this data ? ',
+                          [
+                            {
+                              text: 'Cancel',
+                              onPress: () => console.warn('Cancel Pressed'),
+                              style: 'cancel',
+                            },
+                            {text: 'OK', 
+                             onPress: () => this.delDataNotes(item.desc_id)
+                            },
+                             
+                          ],
+                          {cancelable: false},
+                        );
+                      }}
+                      onPressOut={this._onPressOut}
+                      style={[styles.card,{
+                        backgroundColor : (item.category_name == 'holiday') ? '#2FC2DF' : 
+                                          (item.category_name == 'personal data') ? '#FF92A9' : 
+                                          (item.category_name == 'work') ? '#C0EB6A':
+                                          (item.category_name == 'Wishlist') ? '#FAD06C':
+                                          '#FF92A9'
+                                        }
+                              ]}>
+                        
+                      <View>
+                        <View style={ styles.dateView }>
+                          <Text style={ [styles.text,{fontWeight:'normal',fontSize:13}] }>
+                            {moment(item.createdAt).format('DD-MMM')}
+                          </Text>
+                        </View>
+                        <View style={ styles.titleView }>
+                          <Text  numberOfLines={1} style={ styles.text }>{ item.title }</Text>
+                        </View>
+                        <View style={ styles.categoryView }>
+                          <Text style={ [styles.text,{fontWeight:'normal'}] }>{item.category_name}</Text>
+                        </View>
+                        <View style={ styles.contentView }>
+                          <Text style={ [styles.text,{fontSize:15}] } numberOfLines={4}>{ item.note }</Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                  keyExtractor={(item,index)=>item.desc_id.toString()}
+                />
+              )
+            }
+          </View>
+      );
+    }
+  }
+  
+  const mapStateToProps = ( state ) => {
+    return {
+      notes : state.notes,
+      categories: state.categories,
+    }
+  }
+
+  export default connect(mapStateToProps)(Content)
+
+  const styles = StyleSheet.create({
+    
+    text:{
+      fontWeight:'bold',
+      color:'#fff',
+      fontSize:15
+    },
+    card:{
+      borderRadius: 5,
+      justifyContent:'center',
+      paddingRight:20,
+      paddingTop:10,
+      paddingLeft:5,
+      paddingBottom:0,
+      maxHeight:180,
+      shadowColor:'#000',
+      shadowOffset:{
+        width:0,
+        height:2,
+      },
+      shadowOpacity:0.25,
+      shadowRadius:3.84,
+      elevation:5,
+      flex:1,
+      flexDirection:'row',
+      flexWrap:'wrap',
+      height: 150,
+      marginLeft:'4%',
+      marginRight:'1%',
+      marginBottom:20,
+    },
+    dateView: {
+      alignItems:'flex-end'
+    },
+    titleView: {
+      marginLeft:20
+    },
+    categoryView: {
+      marginLeft:20
+    },  
+    contentView:{
+      marginLeft:20,
+      marginTop:5,
+      marginBottom:10,
+    },
+    search:{
+      paddingLeft:"5%",
+      shadowOpacity:0.5,
+      borderRadius:15,
+      shadowColor:"#E5E5E5",
+      shadowOffset:{
+          width:0,
+          height:7,
+      },
+      shadowOpacity:0.43,
+      shadowRadius:9.51,
+      elevation:5,      
+    },
+    loader:{
+      marginTop:10,
+      alignItems:'center',
+      color:'red'
+    }
+
+  });
