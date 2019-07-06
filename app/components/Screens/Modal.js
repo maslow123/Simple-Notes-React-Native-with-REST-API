@@ -4,6 +4,7 @@ import { Modal, Text, TouchableOpacity, View, Alert, TextInput, StyleSheet,Butto
 /* REDUX */
 import { addCategories } from '../../Publics/Redux/Actions/categories';
 import { connect } from 'react-redux';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 class Modals extends Component {
 
@@ -47,13 +48,16 @@ class Modals extends Component {
                       onChangeText={(data)=>this.setState({url: data})}/>
                       
                 </View>
+                
+                
                 <View>
-                    <Button 
-                      style={{ alignItems:'flex-end', top:'80%', right:80 }} 
+                <TouchableOpacity 
+                     style={{ alignItems:'flex-end',paddingRight:20,top:'80%',right:'20%' }} 
                       onPress={()=>
-                      this.postCategories(this.state.name, this.state.url)} title="add"/>
-                    
-                    <TouchableOpacity style={{ alignItems:'flex-end',top:'30%'}}
+                      this.postCategories(this.state.name, this.state.url)}>
+                      <Text style={styles.textAdd}>Add</Text>  
+                    </TouchableOpacity>    
+                    <TouchableOpacity style={{ alignItems:'flex-end',left:'80%',top:'30%',width:70}}
                         onPress={() => {
                         this.setModalVisible(!this.state.modalVisible);
                         }}>
@@ -118,6 +122,6 @@ const styles = StyleSheet.create({
     textAdd : {
         fontSize:18,
         fontWeight:'bold',
-        color:'#000'
+        color:'#000',
     }
 });

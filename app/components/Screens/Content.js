@@ -20,7 +20,7 @@ class Content extends Component {
         desc_id : '',
         refreshing: false,
         page:1,
-        isLoading:false
+        isLoading:false,
       }
     }
 
@@ -69,12 +69,15 @@ class Content extends Component {
       await this.setState({refreshing: true})
       // await this.getData()
       await this.getData()
-      await this.setState({refreshing: false})
+      await this.setState({refreshing: false,page:1,isLoading:true})
     }
     
     render() {
       const { refreshing } = this.state;
-      
+         
+      let color = ["#000","","","#FF92A9","#F18291","#F09092",
+                   "#FAD06C","#F82918","#2FC2DF","#C0EB6A"
+                  ]
       return ( 
           <View style={{ margin:15, flex:1 }}>
             
@@ -102,7 +105,6 @@ class Content extends Component {
                           [
                             {
                               text: 'Cancel',
-                              onPress: () => console.warn('Cancel Pressed'),
                               style: 'cancel',
                             },
                             {text: 'OK', 
@@ -115,11 +117,8 @@ class Content extends Component {
                       }}
                       onPressOut={this._onPressOut}
                       style={[styles.card,{
-                        backgroundColor : (item.category_name == 'holiday') ? '#2FC2DF' : 
-                                          (item.category_name == 'personal data') ? '#FF92A9' : 
-                                          (item.category_name == 'work') ? '#C0EB6A':
-                                          (item.category_name == 'Wishlist') ? '#FAD06C':
-                                          '#FF92A9'
+                        backgroundColor : item.category_id == null  ? color[0] : 
+                                          color[item.category_id]
                                         }
                               ]}>
                         
@@ -130,10 +129,13 @@ class Content extends Component {
                           </Text>
                         </View>
                         <View style={ styles.titleView }>
-                          <Text  numberOfLines={1} style={ styles.text }>{ item.title }</Text>
+                          <Text  numberOfLines={1} style={ [styles.text,{fontSize:18}] }>{ item.title }</Text>
                         </View>
                         <View style={ styles.categoryView }>
-                          <Text style={ [styles.text,{fontWeight:'normal'}] }>{item.category_name}</Text>
+                          
+                          <Text style={ [styles.text,{fontWeight:'normal'}] }>
+                              {item.category_name == null ? <Text>-</Text> : item.category_name}
+                          </Text>
                         </View>
                         <View style={ styles.contentView }>
                           <Text style={ [styles.text,{fontSize:15}] } numberOfLines={4}>{ item.note }</Text>
@@ -169,9 +171,9 @@ class Content extends Component {
     card:{
       borderRadius: 5,
       justifyContent:'center',
-      paddingRight:20,
-      paddingTop:10,
-      paddingLeft:5,
+      paddingRight:0,
+      paddingTop:20,
+      paddingLeft:0,
       paddingBottom:0,
       maxHeight:180,
       shadowColor:'#000',
@@ -184,17 +186,21 @@ class Content extends Component {
       elevation:5,
       flex:1,
       flexDirection:'row',
-      flexWrap:'wrap',
+      flexWrap:'wrap-reverse',
       height: 150,
-      marginLeft:'4%',
-      marginRight:'1%',
+      
+      marginLeft:'3%',
+      marginRight:'3%',
       marginBottom:20,
     },
     dateView: {
-      alignItems:'flex-end'
+      alignItems:'flex-end',
+      paddingRight:13,
+      paddingTop:10
     },
     titleView: {
-      marginLeft:20
+      marginLeft:20,
+      marginRight:20
     },
     categoryView: {
       marginLeft:20
@@ -202,6 +208,7 @@ class Content extends Component {
     contentView:{
       marginLeft:20,
       marginTop:5,
+      marginRight: 20,
       marginBottom:10,
     },
     search:{

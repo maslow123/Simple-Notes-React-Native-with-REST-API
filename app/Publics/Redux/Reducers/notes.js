@@ -1,5 +1,4 @@
 const initialState = {
-    number: 0,
     data: [],
     isLoading: false,
     page: 1

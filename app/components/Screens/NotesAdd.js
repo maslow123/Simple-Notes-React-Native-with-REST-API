@@ -74,7 +74,6 @@ class NotesAdd extends Component {
                         )
                     }
                 </Picker>
-                <Text>{this.state.category}</Text>
             </Content>
         </Container>
     );
