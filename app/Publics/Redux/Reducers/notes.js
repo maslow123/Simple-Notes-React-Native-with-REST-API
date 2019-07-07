@@ -92,7 +92,6 @@ export default notes = ( state = initialState,action ) => {
             return{
                 ...state,
                 isLoading: false,
-                isFinish: true,
                 data: state.data.filter(note => note.desc_id !== parseInt(action.payload.data.results))
             }
         /* UPD NOTES ACTION */

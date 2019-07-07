@@ -17,6 +17,7 @@ class Content extends Component {
       super();
       this.state = {
         search : '',
+        sort : 'desc',
         desc_id : '',
         refreshing: false,
         page:1,
@@ -25,17 +26,23 @@ class Content extends Component {
     }
 
     componentDidMount = () => {
-      this.setState({isLoading:true},this.getData()),
+      this.setState({isLoading:false},this.getData(this.state.search,this.state.sort)),
       this.getDataCategories()
     }
-    
-    getSearchData = (keyword) => {
-      this.props.dispatch(searchNotes(keyword));
+    /* If data flatlist is empty */
+    emptyData = () => {
+      return(
+        <View>
+          <Text>Data not found !</Text>
+        </View> 
+
+      )
     }
     /* GET DATA NOTES */
     getData = () => {
       this.props.dispatch(getNotes())
     }
+
     /* INFINITY SCROLL */
     handleLoadMore = async () => {
       if(this.state.page < this.props.notes.page) {
@@ -46,6 +53,7 @@ class Content extends Component {
         this.setState({isLoading:false})
       }
     }
+
     /* Make a reloader for infinity scroll */
     renderFooter = ()=>{
       return(
@@ -56,27 +64,30 @@ class Content extends Component {
             </View> : null
       )
     }
+
     /* GET DATA CATEGORIES */
     getDataCategories = () => {
       this.props.dispatch(getCategories())
     }
+
     /* DEL DATA CATEGORIES */
     delDataNotes = (id) => {
       this.props.dispatch(delNotes(id))
     }
+    
     /* FITUR PULL REFRESH */
     _onRefresh = async () => {
       await this.setState({refreshing: true})
       // await this.getData()
       await this.getData()
-      await this.setState({refreshing: false,page:1,isLoading:true})
+      await this.setState({refreshing: false,page:1})
     }
     
     render() {
       const { refreshing } = this.state;
          
-      let color = ["#000","","","#FF92A9","#F18291","#F09092",
-                   "#FAD06C","#F82918","#2FC2DF","#C0EB6A"
+      let color = ["#808080","#2FC2DF","#FAD06C","#C0EB6A","#FF92A9","#00ffbf",
+                   "#e61919","#996666","#0c9f96","#0c85ff"
                   ]
       return ( 
           <View style={{ margin:15, flex:1 }}>
@@ -86,6 +97,7 @@ class Content extends Component {
               (
                 
                 <FlatList
+                  ListEmptyComponent={this.emptyData}
                   data={ this.props.notes.data }
                   onEndReachedThreshold={0.1} // Scrolling
                   onEndReached={this.handleLoadMore}

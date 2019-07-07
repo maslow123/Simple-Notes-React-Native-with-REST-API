@@ -6,7 +6,7 @@ import { Item, Input, Container,
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import debounce from 'lodash.debounce';
 
-import { searchNotes, sortNotes } from '../../Publics/Redux/Actions/notes';
+import { getNotes } from '../../Publics/Redux/Actions/notes';
 import Content from './Content';
 
 /* REDUX */
@@ -27,14 +27,15 @@ class Homepages extends Component{
   };
   state = {
     search : '',
+    sort: 'desc',
     searchActive : false
   }
 
 /* SEARCH DATA METHOD */
- getSearchData = (keyword,sort) => {
+ getNotesData = (keyword,sort) => {
    this.setState({search : keyword})
-   this.props.dispatch(searchNotes(this.state.search,sort))
- } 
+   this.props.dispatch(getNotes(this.state.search,sort))
+ }
 /* SORT DATA METHOD */ 
   getSortData = (sort) => {
     this.props.dispatch(sortNotes(sort));
@@ -68,9 +69,9 @@ class Homepages extends Component{
                       style={{width:25,height:25}}/>
                   </TouchableOpacity>
               }>
-                <MenuItem onPress={()=>this.getSortData('ASC')}>ASCENDING</MenuItem>
+                <MenuItem onPress={()=>this.getNotesData(this.state.search,'ASC')}>ASCENDING</MenuItem>
                 <MenuDivider />
-                <MenuItem onPress={()=>this.getSortData('DESC')}>DESCENDING</MenuItem>
+                <MenuItem onPress={()=>this.getNotesData(this.state.search,'DESC')}>DESCENDING</MenuItem>
               </Menu>
             </TouchableOpacity>
           </Right>
@@ -81,7 +82,7 @@ class Homepages extends Component{
             <Input 
               placeholder=" Search..." 
               style={styles.search}
-              onChangeText={debounce(this.getSearchData,500)}>
+              onChangeText={debounce(this.getNotesData,500)}>
             </Input>
           </Item>
         </View>
