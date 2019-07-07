@@ -1,5 +1,7 @@
 # Simple Mobile Application NOTES APP With React Native
-<img src="https://github.com/maslow123/Simple-Notes-React-Native-with-REST-API/blob/master/Screenshot_2019-07-07-16-14-22-577_com.practice.png?raw=true" width=300 height=500 align="center"/>
+<p align="center">
+    <img src="https://github.com/maslow123/Simple-Notes-React-Native-with-REST-API/blob/master/Screenshot_2019-07-07-16-14-22-  577_com.practice.png?raw=true" width=300 height=500 align="center"/>
+</p>
 
 ## How to use this program ?
 
