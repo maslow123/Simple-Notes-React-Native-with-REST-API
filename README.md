@@ -1,9 +1,9 @@
 # Simple Mobile Application NOTES APP With React Native
 <p align="center">
-    <img src="https://raw.githubusercontent.com/maslow123/Simple-Notes-React-Native-with-REST-API/master/Screenshot_2019-07-07-16-14-22-577_com.practice.png" width=200 align="center" style="margin-right:20px"/>
-    <img src="https://raw.githubusercontent.com/maslow123/Simple-Notes-React-Native-with-REST-API/master/Screenshot_2019-07-07-18-07-29-500_com.practice.png" width=200 align="center"/>
-    <img src="https://github.com/maslow123/Simple-Notes-React-Native-with-REST-API/blob/master/Screenshot_2019-07-07-18-07-52-560_com.practice.png" width=200 align="center"/>
-    <img src="https://raw.githubusercontent.com/maslow123/Simple-Notes-React-Native-with-REST-API/master/Screenshot_2019-07-07-18-30-41-207_com.practice.png" width=200 align="center"/>
+    <img src="https://raw.githubusercontent.com/maslow123/Simple-Notes-React-Native-with-REST-API/master/Screenshot_2019-07-07-16-14-22-577_com.practice.png" width=400 align="center" style="margin-right:20px"/>
+    <img src="https://raw.githubusercontent.com/maslow123/Simple-Notes-React-Native-with-REST-API/master/Screenshot_2019-07-07-18-07-29-500_com.practice.png" width=400 align="center"/>
+    <img src="https://github.com/maslow123/Simple-Notes-React-Native-with-REST-API/blob/master/Screenshot_2019-07-07-18-07-52-560_com.practice.png" width=400 align="center"/>
+    <img src="https://raw.githubusercontent.com/maslow123/Simple-Notes-React-Native-with-REST-API/master/Screenshot_2019-07-07-18-30-41-207_com.practice.png" width=400 align="center"/>
 </p>
 
 ## How to use this program ?
