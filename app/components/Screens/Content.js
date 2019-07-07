@@ -74,7 +74,7 @@ class Content extends Component {
     delDataNotes = (id) => {
       this.props.dispatch(delNotes(id))
     }
-    
+
     /* FITUR PULL REFRESH */
     _onRefresh = async () => {
       await this.setState({refreshing: true})
@@ -89,6 +89,8 @@ class Content extends Component {
       let color = ["#808080","#2FC2DF","#FAD06C","#C0EB6A","#FF92A9","#00ffbf",
                    "#e61919","#996666","#0c9f96","#0c85ff"
                   ]
+                  
+      console.disableYellowBox = true;
       return ( 
           <View style={{ margin:15, flex:1 }}>
             
