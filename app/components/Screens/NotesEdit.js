@@ -19,8 +19,12 @@ class NotesEdit extends Component {
       }
   };
   updateNotes = (id,title,note,category) => {
-    this.props.dispatch(updNotes(id,title,note,category));
-    this.props.navigation.goBack()
+    if(title!=='' && note !== '' && category !== ''){
+        this.props.dispatch(updNotes(id,title,note,category));
+        this.props.navigation.goBack()
+    }else {
+        alert('Data must be filled in!')
+    }
 }
   render() {
     

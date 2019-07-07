@@ -19,8 +19,13 @@ class Modals extends Component {
   }
   
   postCategories = (name,url) => {
-    this.props.dispatch(addCategories(name,url));
-    this.setModalVisible(!this.state.modalVisible);
+    if(name!=='' && url !== ''){
+      this.props.dispatch(addCategories(name,url));
+      this.setModalVisible(!this.state.modalVisible);
+  }else {
+      alert('Data must be filled in!')
+  }
+    
     
   } 
 

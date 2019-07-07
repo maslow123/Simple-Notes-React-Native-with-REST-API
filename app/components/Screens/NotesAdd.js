@@ -12,11 +12,16 @@ class NotesAdd extends Component {
     state = {
         title: '',
         content: '',
+        category: '',
     }
     
     postNotes = (title,content,category) => {
-        this.props.dispatch(addNotes(title,content,category));
-        this.props.navigation.goBack()
+        if(title!=='' && content !== '' && category !== ''){
+            this.props.dispatch(addNotes(title,content,category));
+            this.props.navigation.goBack()
+        }else {
+            alert('Data must be filled in!')
+        }
     }
   
   render() {
