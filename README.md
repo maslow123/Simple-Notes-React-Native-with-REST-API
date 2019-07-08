@@ -33,7 +33,7 @@ react-native run-android
 
 6. And finally, if it's like the picture below, the application was successfully executed!
 
-**You can install my application, if you have been clone this repo, the name of application is app-release.apk, and for demo video application you can check in my Facebook https://www.facebook.com/fadhly.rasyaii**
+**You can install my application, if you have been clone this repo, the name of application is [app-release.apk](https://github.com/maslow123/Simple-Notes-React-Native-with-REST-API/blob/master/app-release.apk), and for demo video application you can check in my Facebook https://www.facebook.com/fadhly.rasyaii**
 
 Thanks for your attention 
 
