@@ -8,7 +8,6 @@
 # Simple Chat App With API GMaps React Native
 
 ## How to use this program ?
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 1. You must clone this repository and [REST API Notes App](https://github.com/maslow123/restful-notes-app), and don't forget to follow the guide on how to install the backend
 How to use this program ?
